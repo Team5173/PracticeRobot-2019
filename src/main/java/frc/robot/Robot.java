@@ -18,41 +18,44 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANEncoder;
 
 public class Robot extends TimedRobot {
-  DifferentialDrive myDrive;
+  private DifferentialDrive myDrive;
 
-  XboxController Controller;
-  UsbCamera Camera1;
-  UsbCamera Camera2;
+  private XboxController Controller;
+  private UsbCamera Camera1, Camera2;
 
-  VictorSPX leftSpinner, rightSpinner;
+  private VictorSPX leftSpinner, rightSpinner;
 
-  DoubleSolenoid Plunger;
-  DoubleSolenoid Gripper;
+  private CANSparkMax Motor;
+  private CANEncoder Encoder;
 
-  Spark Left, Right;
-  TalonSRX leftLiftMotor, rightLiftMotor, gripperFlipper;
-  Victor liftMotor;
+  //private DoubleSolenoid Plunger, Gripper;
+
+  private Spark Left, Right;
+  private TalonSRX leftLiftMotor, rightLiftMotor, gripperFlipper;
+  private Victor liftMotor;
 
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
-  Compressor c;
+  //private Compressor c;
 
   public void robotInit() {
 
     //Usb Cameras
     Camera1 = CameraServer.getInstance().startAutomaticCapture();
-    Camera2 = CameraServer.getInstance().startAutomaticCapture();
+    //Camera2 = CameraServer.getInstance().startAutomaticCapture();
     Camera1.setConnectionStrategy(VideoSource.ConnectionStrategy.kAutoManage);
     Camera1.setVideoMode(PixelFormat.kMJPEG, 320, 240, 8);
     Camera1.setBrightness(30);
-    Camera2.setConnectionStrategy(VideoSource.ConnectionStrategy.kAutoManage);
+    /*Camera2.setConnectionStrategy(VideoSource.ConnectionStrategy.kAutoManage);
     Camera2.setVideoMode(PixelFormat.kMJPEG, 320, 240, 8);
-    Camera2.setBrightness(30);
+    Camera2.setBrightness(30);*/
     
     //Drive System
     Left = new Spark(0);
@@ -61,6 +64,7 @@ public class Robot extends TimedRobot {
     //Right.setInverted(true);
     myDrive = new DifferentialDrive(Left, Right);
     myDrive.setRightSideInverted(false);
+
     //Lift Motor Controllers
     leftLiftMotor = new TalonSRX(2);
     rightLiftMotor = new TalonSRX(3);
@@ -75,6 +79,10 @@ public class Robot extends TimedRobot {
 
     //Arm Flipper
     gripperFlipper = new TalonSRX(6);
+
+    //SparkMax Stuff
+    /*Motor = new CANSparkMax(0, MotorType.kBrushless);
+    Encoder = Motor.getEncoder();*/
 
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
