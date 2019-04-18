@@ -18,9 +18,6 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANEncoder;
-
 public class Robot extends TimedRobot {
   private DifferentialDrive myDrive;
 
@@ -28,9 +25,6 @@ public class Robot extends TimedRobot {
   private UsbCamera Camera1, Camera2;
 
   private VictorSPX leftSpinner, rightSpinner;
-
-  private CANSparkMax Motor;
-  private CANEncoder Encoder;
 
   //private DoubleSolenoid Plunger, Gripper;
 
@@ -79,10 +73,6 @@ public class Robot extends TimedRobot {
 
     //Arm Flipper
     gripperFlipper = new TalonSRX(6);
-
-    //SparkMax Stuff
-    /*Motor = new CANSparkMax(0, MotorType.kBrushless);
-    Encoder = Motor.getEncoder();*/
 
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
