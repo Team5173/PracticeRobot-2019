@@ -26,7 +26,7 @@ public class Robot extends TimedRobot {
 
   private VictorSPX leftSpinner, rightSpinner;
 
-  //private DoubleSolenoid Plunger, Gripper;
+  //private DoubleSolenoid frontLifter, backLifter;
 
   private Spark Left, Right;
   private TalonSRX leftLiftMotor, rightLiftMotor, gripperFlipper;
@@ -62,7 +62,6 @@ public class Robot extends TimedRobot {
     //Lift Motor Controllers
     leftLiftMotor = new TalonSRX(2);
     rightLiftMotor = new TalonSRX(3);
-    liftMotor = new Victor(2);
 
     //Xbox Controller
     Controller = new XboxController(0);
